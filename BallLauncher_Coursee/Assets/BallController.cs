@@ -6,6 +6,7 @@ using UnityEngine.InputSystem.Controls;
 
 public class BallController : MonoBehaviour
 {
+    [SerializeField] Rigidbody2D ballRigidBody;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,10 +18,14 @@ public class BallController : MonoBehaviour
     {
         if(Touchscreen.current.primaryTouch.press.isPressed)
         {
+            ballRigidBody.isKinematic = true;
             Vector2 touchPosition = Touchscreen.current.primaryTouch.position.ReadValue();
-            Debug.Log(touchPosition);
             Vector3 worldPosition = Camera.main.ScreenToWorldPoint(touchPosition);
-            Debug.Log(worldPosition);
-        }                     
+            ballRigidBody.position = worldPosition;
+        }
+        else
+        {
+            ballRigidBody.isKinematic = false;
+        }
     }
 }
